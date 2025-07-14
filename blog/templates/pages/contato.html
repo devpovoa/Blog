@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load form_filters %}
+{% block title %}Contato{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="p-4 shadow rounded bg-light">
+            <h2 class="mb-3">Fale comigo</h2>
+            <p class="text-muted">Preencha o formulário e entrarei em contato assim que possível.</p>
+
+            {% if form.is_valid %}
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> Mensagem enviada com sucesso!
+            </div>
+            {% endif %}
+
+            <form method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="form-floating mb-3">
+                    {{ form.nome|add_class:"form-control" }}
+                    <label for="{{ form.nome.id_for_label }}">{{ form.nome.label }}</label>
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.email|add_class:"form-control" }}
+                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.mensagem|add_class:"form-control" }}
+                    <label for="{{ form.mensagem.id_for_label }}">{{ form.mensagem.label }}</label>
+                </div>
+                <div class="mb-3">
+                    {{ form.captcha }}
+                    {% if form.captcha.errors %}
+                    <div class="text-danger small mt-1">
+                        {{ form.captcha.errors.as_text|linebreaks }}
+                    </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-paper-plane"></i> Enviar mensagem
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="p-4 shadow rounded bg-white h-100">
+            <h2 class="mb-3">Outros canais</h2>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item">
+                    <i class="fas fa-envelope text-primary"></i> thiagopovoadev@hotmail.com
+                </li>
+                <li class="list-group-item">
+                    <i class="fab fa-linkedin text-info"></i>
+                    <a href="https://www.linkedin.com/in/thiago-povoa-dev" target="_blank">LinkedIn</a>
+                </li>
+                <li class="list-group-item">
+                    <i class="fab fa-github text-dark"></i>
+                    <a href="https://github.com/devpovoa" target="_blank">GitHub</a>
+                </li>
+            </ul>
+            <a href="https://wa.me/5521990825235" target="_blank" class="btn btn-success w-100">
+                <i class="fab fa-whatsapp"></i> Falar comigo no WhatsApp
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ MODAL de sucesso -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-success">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title"><i class="fas fa-check-circle"></i> Mensagem enviada!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                Agradeço pelo contato. Em breve retornarei.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ✅ Script para mostrar modal se form.is_valid -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        {%
+            if request.GET.sucesso %
+        }
+        const modal = new bootstrap.Modal(document.getElementById('successModal'));
+        modal.show();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+        {%
+            endif %
+        }
+    });
+</script>
+{% endblock %}
