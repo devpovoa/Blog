@@ -12,7 +12,7 @@ class Profile(models.Model):
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to=user_directory_path, default='default.jpg')
+    photo = models.ImageField(upload_to=user_directory_path, default='defaults/default.jpg')
     full_name = models.CharField(max_length=100, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=1, choices=SEXO_CHOICES, blank=True)

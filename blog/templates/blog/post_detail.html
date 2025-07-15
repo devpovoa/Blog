@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load form_filters %}
-
+{% load form_filters email_filters %}
 {% block title %}{{ post.title }} | Blog{% endblock %}
 
 {% block content %}
@@ -18,14 +17,17 @@
     <h2 class="h4 mb-3"><i class="fas fa-comments"></i> Comentários</h2>
     {% for comment in comments %}
     <div class="mb-3 p-3 border rounded bg-light d-flex">
-        {% if comment.user.profile.photo %}
         <img src="{{ comment.user.profile.photo.url }}" class="rounded-circle me-3"
              alt="Foto de {{ comment.user.username }}" width="48" height="48">
-        {% else %}
-        <i class="fas fa-user-circle fa-2x text-secondary me-3"></i>
-        {% endif %}
         <div>
-            <strong>{{ comment.user.username }}</strong><br>
+            <strong>
+                {% if comment.user.get_full_name %}
+                {{ comment.user.get_full_name }}
+                {% else %}
+                {{ comment.user.email|email_prefix }}
+                {% endif %}
+            </strong>
+            <br>
             <small class="text-muted">{{ comment.created_at|date:"d/m/Y H:i" }}</small>
             <p class="mb-0 mt-2">{{ comment.content|linebreaks }}</p>
         </div>
