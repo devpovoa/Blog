@@ -8,7 +8,7 @@ class PostListView(ListView):
     template_name = 'blog/post_list.html'
     context_object_name = 'posts'
     ordering = ['-published_at']
-    paginate_by = 5
+    paginate_by = 6
 
     def get_queryset(self):
         query = self.request.GET.get('q')

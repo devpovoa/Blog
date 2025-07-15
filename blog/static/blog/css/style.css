@@ -1,0 +1,251 @@
+/* ======== FUNDO GLOBAL ======== */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, #e8f6ff, #ffffff);
+    color: #333;
+}
+
+/* ======== NAVBAR CUSTOM ======== */
+.navbar-custom {
+    background: linear-gradient(135deg, #000000, #0d6efd);
+    color: white;
+    border-bottom-right-radius: 80px;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+.navbar-custom .navbar-brand:hover {
+    color: #cce5ff;
+}
+
+.navbar-custom .nav-link {
+    color: #fff;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #cce5ff;
+}
+
+/* ======== FOOTER ======== */
+.footer-custom {
+    background: linear-gradient(135deg, #0d6efd, #000000);
+    color: white;
+    border-top-left-radius: 80px;
+    padding: 1.5rem 0;
+}
+
+.footer-custom a {
+    color: #fff;
+    transition: opacity 0.2s ease;
+}
+
+.footer-custom a:hover {
+    opacity: 0.7;
+}
+
+/* ======== GRID DE POSTS ======== */
+.post-card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.post-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 1rem 1rem 0 0;
+}
+
+/* ======== BADGES COLORIDAS (categorias) ======== */
+.badge-category {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* mapeamento das cores das categorias */
+.badge-news {
+    background-color: #ff9800;
+}
+
+.badge-community {
+    background-color: #e91e63;
+}
+
+.badge-culture {
+    background-color: #4caf50;
+}
+
+.badge-engineering {
+    background-color: #3f51b5;
+}
+
+.badge-education {
+    background-color: #00bcd4;
+}
+
+.badge-partner {
+    background-color: #8bc34a;
+}
+
+.badge-updates {
+    background-color: #ff5722;
+}
+
+.badge-security {
+    background-color: #9c27b0;
+}
+
+/* ======== FILTRO DE CATEGORIAS ======== */
+.badge-filter {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.badge-filter:hover {
+    background: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+}
+
+.badge-filter.active {
+    background: #0d6efd;
+    color: #fff;
+    border-color: #0d6efd;
+}
+
+.badge-filter.clear-filter {
+    background: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+}
+
+/* ======== BOTÕES ======== */
+.btn.rounded-pill {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: 500;
+}
+
+/* ======== POST DETAIL ======== */
+.post-content {
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+.post-content p {
+    margin-bottom: 1rem;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* ======== COMMENTS ======== */
+.comment-box {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.comment-box img {
+    border-radius: 50%;
+    border: 2px solid #e9ecef;
+}
+
+.comment-box strong {
+    font-weight: 600;
+}
+
+.comment-box small {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* ======== PAGINAÇÃO ======== */
+.pagination .page-link {
+    border-radius: 6px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #fff;
+}
+
+
+.about-text p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+/* Página Contato */
+.list-group-item a {
+  font-weight: 500;
+  color: #333;
+}
+.list-group-item a:hover {
+  color: #0d6efd;
+}
+
+.comment-box {
+  transition: box-shadow 0.2s ease;
+}
+.comment-box:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+.border-start {
+  border-color: #e5e5e5 !important;
+}
+
+
+.card {
+  border-radius: 0.8rem;
+}
+
+/* Botão de logout no dropdown */
+.dropdown-item form button.btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  text-align: left;
+  color: #dc3545; /* vermelho */
+  font-weight: 500;
+}
+
+.dropdown-item form button.btn:hover {
+  background: rgba(220, 53, 69, 0.1); /* vermelho claro ao hover */
+  color: #b02a37; /* vermelho mais escuro */
+}
+

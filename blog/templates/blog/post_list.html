@@ -1,81 +1,103 @@
 {% extends "base.html" %}
+{% load category_tags form_filters email_filters %}
+
 {% block title %}Todos os Posts{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Todos os Posts</h1>
 
-<!-- 🔍 CAMPO DE BUSCA -->
+<!-- 🔹 Título -->
+<h1 class="fw-bold text-center mb-5">Últimos Artigos</h1>
+
+<!-- 🔹 Campo de Busca -->
 <form method="get" class="input-group mb-4">
     <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Buscar no blog...">
-    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+    <button class="btn btn-primary" type="submit">
+        <i class="fas fa-search me-1"></i> Buscar
+    </button>
 </form>
 
-<!-- 🏷️ CATEGORIAS -->
+<!-- 🔹 Categorias -->
 {% if categories %}
-<div class="mb-4">
-    <strong>Categorias:</strong>
-    <ul class="list-inline mt-2">
+<div class="text-center mb-5">
+    <strong class="d-block mb-3">Filtrar por categoria:</strong>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
         {% for category in categories %}
-        <li class="list-inline-item">
-            <a href="?category={{ category.slug }}"
-               class="btn btn-sm {% if category.slug == current_category %}btn-primary{% else %}btn-outline-secondary{% endif %}">
-                {{ category.name }}
-            </a>
-        </li>
+        <a href="?category={{ category.slug }}"
+           class="badge-filter {% if category.slug == current_category %}active{% endif %}">
+            {{ category.name }}
+        </a>
         {% endfor %}
         {% if current_category %}
-        <li class="list-inline-item">
-            <a href="?" class="btn btn-sm btn-warning">Limpar Filtro</a>
-        </li>
+        <a href="?" class="badge-filter clear-filter">
+            Limpar Filtro ✕
+        </a>
         {% endif %}
-    </ul>
+    </div>
 </div>
 {% endif %}
 
-<!-- 📄 LISTA DE POSTS -->
-{% for post in posts %}
-<div class="card mb-4 shadow-sm">
-    <div class="card-body">
-        <h3 class="card-title">
-            <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none text-dark">{{ post.title }}</a>
-        </h3>
-        <p class="text-muted mb-1">
-            <i class="fas fa-user"></i> {{ post.author }} |
-            <i class="fas fa-calendar-alt"></i> {{ post.published_at|date:"d/m/Y H:i" }}
-            {% if post.category %}
-            | <i class="fas fa-tag"></i> <a href="?category={{ post.category.slug }}">{{ post.category.name }}</a>
-            {% endif %}
-        </p>
-        <p class="card-text">{{ post.content|truncatewords:30|linebreaks }}</p>
-        <a href="{% url 'post_detail' post.slug %}" class="btn btn-outline-primary">
-            <i class="fas fa-book-open"></i> Ler mais
-        </a>
-    </div>
-</div>
-{% empty %}
-<p class="alert alert-warning">Nenhum post encontrado.</p>
-{% endfor %}
+<!-- 🔹 Grid de Posts -->
+{% if posts %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for post in posts %}
+    <div class="col">
+        <div class="card h-100 post-card">
 
-<!-- 📄 PAGINAÇÃO -->
+            {% if post.image %}
+            <img src="{{ post.image.url }}" class="card-img-top rounded-top" alt="{{ post.title }}">
+            {% endif %}
+
+            <div class="card-body">
+                {% if post.category %}
+                <span class="badge-category {{ post.category.slug|category_color }}">
+          {{ post.category.name }}
+        </span>
+                {% endif %}
+
+                <h5 class="card-title fw-bold mt-3">
+                    <a href="{{ post.get_absolute_url }}" class="text-decoration-none text-dark">
+                        {{ post.title }}
+                    </a>
+                </h5>
+
+                <p class="text-muted small">
+                    <i class="fas fa-user-circle"></i> {{ post.author }}
+                    <span class="mx-2">•</span>
+                    <i class="fas fa-calendar-alt"></i> {{ post.published_at|date:"d M Y" }}
+                </p>
+
+                <p class="card-text text-secondary">{{ post.content|truncatewords:20 }}</p>
+            </div>
+
+            <div class="card-footer bg-white border-0 text-end">
+                <a href="{{ post.get_absolute_url }}" class="btn btn-dark btn-sm rounded-pill">
+                    Ler mais →
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="alert alert-warning text-center">Nenhum post encontrado.</p>
+{% endif %}
+
+<!-- 🔹 Paginação -->
 {% if is_paginated %}
-<nav aria-label="Paginação de posts">
+<nav aria-label="Paginação de posts" class="mt-5">
     <ul class="pagination justify-content-center">
+
         {% if page_obj.has_previous %}
-        <li class="page-item">
-            <a class="page-link"
-               href="?{% if query %}q={{ query }}&{% endif %}{% if current_category %}category={{ current_category }}&{% endif %}page=1">&laquo;&laquo;</a>
-        </li>
         <li class="page-item">
             <a class="page-link"
                href="?{% if query %}q={{ query }}&{% endif %}{% if current_category %}category={{ current_category }}&{% endif %}page={{ page_obj.previous_page_number }}">&laquo;</a>
         </li>
-        {% else %}
-        <li class="page-item disabled"><span class="page-link">&laquo;&laquo;</span></li>
-        <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
         {% endif %}
 
         <li class="page-item disabled">
-            <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            <span class="page-link">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
         </li>
 
         {% if page_obj.has_next %}
@@ -83,14 +105,8 @@
             <a class="page-link"
                href="?{% if query %}q={{ query }}&{% endif %}{% if current_category %}category={{ current_category }}&{% endif %}page={{ page_obj.next_page_number }}">&raquo;</a>
         </li>
-        <li class="page-item">
-            <a class="page-link"
-               href="?{% if query %}q={{ query }}&{% endif %}{% if current_category %}category={{ current_category }}&{% endif %}page={{ page_obj.paginator.num_pages }}">&raquo;&raquo;</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-        <li class="page-item disabled"><span class="page-link">&raquo;&raquo;</span></li>
         {% endif %}
+
     </ul>
 </nav>
 {% endif %}

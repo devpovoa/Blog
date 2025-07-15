@@ -1,29 +1,61 @@
 {% extends "base.html" %}
-{% block title %}Sobre{% endblock %}
 {% load static %}
+{% block title %}Sobre{% endblock %}
 
 {% block content %}
-<div class="row align-items-center">
+
+<!-- 🔹 HERO DO SOBRE -->
+<section class="text-center mb-5">
+    <h1 class="fw-bold">Sobre mim</h1>
+    <p class="text-muted">Um pouco mais sobre minha trajetória e meus projetos</p>
+</section>
+
+<!-- 🔹 CONTEÚDO SOBRE -->
+<div class="row align-items-center justify-content-center">
+    <!-- FOTO -->
     <div class="col-md-4 text-center mb-4">
         {% if about.foto %}
-        <img src="{{ about.foto.url }}" class="img-fluid rounded-circle shadow" style="max-width: 250px;"
-             alt="{{ about.nome }}">
+        <img src="{{ about.foto.url }}" class="img-fluid rounded-circle shadow-lg border border-3 border-light"
+             style="max-width: 220px;" alt="{{ about.nome }}">
+        {% else %}
+        <img src="{% static 'blog/img/avatar-default.png' %}" class="img-fluid rounded-circle shadow-lg border border-3 border-light"
+             style="max-width: 220px;" alt="Foto padrão">
         {% endif %}
     </div>
-    <div class="col-md-8">
-        <h2>{{ about.nome }}</h2>
-        <p class="lead">{{ about.cargo }}</p>
-        <p>{{ about.biografia|linebreaks }}</p>
-        <div class="mt-4">
-            <a href="{{ about.linkedin }}" class="btn btn-outline-primary me-2" target="_blank"><i
-                    class="fab fa-linkedin"></i> LinkedIn</a>
-            <a href="{{ about.github }}" class="btn btn-outline-dark me-2" target="_blank"><i class="fab fa-github"></i>
-                GitHub</a>
-            <a href="mailto:{{ about.email }}" class="btn btn-outline-secondary me-2"><i class="fas fa-envelope"></i>
-                Email</a>
-            <a href="{{ about.portfolio }}" class="btn btn-outline-info" target="_blank"><i class="fas fa-globe"></i>
-                Portfólio</a>
+
+    <!-- TEXTO -->
+    <div class="col-md-7">
+        <h2 class="fw-bold">{{ about.nome }}</h2>
+        <p class="lead text-primary fw-semibold">{{ about.cargo }}</p>
+
+        <div class="about-text">
+            {{ about.biografia|linebreaks }}
+        </div>
+
+        <!-- LINKS -->
+        <div class="mt-4 d-flex flex-wrap gap-2">
+            {% if about.linkedin %}
+            <a href="{{ about.linkedin }}" class="btn btn-primary rounded-pill" target="_blank">
+                <i class="fab fa-linkedin me-1"></i> LinkedIn
+            </a>
+            {% endif %}
+            {% if about.github %}
+            <a href="{{ about.github }}" class="btn btn-dark rounded-pill" target="_blank">
+                <i class="fab fa-github me-1"></i> GitHub
+            </a>
+            {% endif %}
+            {% if about.email %}
+            <a href="mailto:{{ about.email }}" class="btn btn-secondary rounded-pill">
+                <i class="fas fa-envelope me-1"></i> Email
+            </a>
+            {% endif %}
+            {% if about.portfolio %}
+            <a href="{{ about.portfolio }}" class="btn btn-info rounded-pill" target="_blank">
+                <i class="fas fa-globe me-1"></i> Portfólio
+            </a>
+            {% endif %}
         </div>
     </div>
 </div>
+
 {% endblock %}

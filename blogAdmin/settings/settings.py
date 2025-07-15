@@ -109,8 +109,6 @@ RECAPTCHA_REQUIRED_SCORE = 0.85
 # Caminho após login bem-sucedido
 LOGIN_REDIRECT_URL = 'profile_update'
 
-# Caminho após logout (se não for definido via next_page)
-LOGOUT_REDIRECT_URL = 'post_list'
 
 # Caminho para onde o Django redireciona automaticamente quem precisa estar logado
 LOGIN_URL = 'login'

@@ -6,7 +6,11 @@ from accounts.views.profile_update_view import ProfileUpdateView
 
 urlpatterns = [
     path('login/', LoginView.as_view(template_name='accounts/auth/login.html'), name='login'),
-    path('logout/', LogoutView.as_view(template_name='accounts/auth/logged_out.html'), name='logout'),
+    path(
+        'logout/',
+        LogoutView.as_view(template_name='accounts/auth/logged_out.html'),
+        name='logout'
+    ),
     path('register/', UserRegisterView.as_view(template_name='accounts/auth/register.html'), name='register'),
     path('perfil/', ProfileUpdateView.as_view(template_name='accounts/profile/profile_update.html'),
          name='profile_update'),

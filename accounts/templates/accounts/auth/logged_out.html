@@ -2,17 +2,52 @@
 {% block title %}Você saiu | Blog{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 text-center">
-        <h2 class="mb-4 text-success">
-            <i class="fas fa-door-open me-2"></i>Você saiu com sucesso
-        </h2>
 
-        <p class="lead">Esperamos ver você novamente em breve!</p>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm border-0 rounded text-center">
+            <div class="card-body p-4">
 
-        <a href="{% url 'login' %}" class="btn btn-primary mt-3">
-            <i class="fas fa-sign-in-alt me-2"></i>Entrar novamente
-        </a>
+                <!-- Título -->
+                <h2 class="mb-3 text-success">
+                    <i class="fas fa-door-open me-2"></i> Você saiu com sucesso
+                </h2>
+
+                <!-- Mensagem -->
+                <p class="lead text-muted">
+                    Esperamos ver você novamente em breve! 😊
+                </p>
+
+                <!-- Contagem regressiva -->
+                <p class="small text-muted mt-3">
+                    Você será redirecionado para a página principal em <span id="countdown">5</span> segundos...
+                </p>
+
+                <!-- Botão manual -->
+                <a href="{% url 'post_list' %}" class="btn btn-primary mt-3 rounded-pill">
+                    <i class="fas fa-home me-2"></i> Ir agora para a Home
+                </a>
+
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- ✅ Script de redirecionamento automático -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let seconds = 5;
+        const countdownEl = document.getElementById("countdown");
+
+        const interval = setInterval(() => {
+            seconds--;
+            countdownEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(interval);
+                window.location.href = "{% url 'post_list' %}";
+            }
+        }, 1000);
+    });
+</script>
+
 {% endblock %}

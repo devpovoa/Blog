@@ -3,60 +3,138 @@
 {% block title %}Meu Perfil | Blog{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-6">
-        <h2 class="mb-4"><i class="fas fa-user-circle me-2"></i>Editar Perfil</h2>
 
-        <form method="post" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
-            {{ form.non_field_errors }}
+<!-- 🔹 HERO -->
+<section class="text-center mb-5">
+    <h1 class="fw-bold"><i class="fas fa-user-circle me-2"></i>Meu Perfil</h1>
+    <p class="text-muted">Atualize suas informações e visualize seus comentários</p>
+</section>
 
-            <div class="mb-3">
-                <label class="form-label"><i class="fas fa-id-card me-2"></i>Nome completo</label>
-                {{ form.full_name|add_class:"form-control" }}
-                {{ form.full_name.errors }}
-            </div>
+<div class="row g-4">
 
-            <div class="mb-3">
-                <label class="form-label"><i class="fas fa-image me-2"></i>Foto de perfil</label>
-                {{ form.photo|add_class:"form-control" }}
-                {{ form.photo.errors }}
-            </div>
+    <!-- 🔹 FORMULÁRIO DE EDIÇÃO -->
+    <div class="col-lg-6">
+        <div class="p-4 shadow-sm rounded bg-white h-100">
+            <h2 class="h5 mb-4 text-primary"><i class="fas fa-edit me-2"></i>Editar Perfil</h2>
 
-            <div class="mb-3">
-                <label class="form-label"><i class="fas fa-calendar-alt me-2"></i>Data de nascimento</label>
-                {{ form.birth_date|add_class:"form-control" }}
-                {{ form.birth_date.errors }}
-            </div>
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
 
-            <div class="mb-3">
-                <label class="form-label"><i class="fas fa-venus-mars me-2"></i>Gênero</label>
-                {{ form.gender|add_class:"form-select" }}
-                {{ form.gender.errors }}
-            </div>
+                <!-- Nome completo -->
+                <div class="form-floating mb-3">
+                    {{ form.full_name|add_class:"form-control" }}
+                    <label for="{{ form.full_name.id_for_label }}">
+                        <i class="fas fa-id-card me-1"></i> Nome completo
+                    </label>
+                    {{ form.full_name.errors }}
+                </div>
 
-            <button type="submit" class="btn btn-primary w-100">
-                <i class="fas fa-save me-2"></i>Salvar Alterações
-            </button>
-        </form>
-    </div>
+                <!-- Foto de perfil -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        <i class="fas fa-image me-1"></i> Foto de perfil
+                    </label>
+                    {{ form.photo|add_class:"form-control" }}
+                    {{ form.photo.errors }}
+                </div>
 
-    <div class="col-md-6">
-        <h2 class="mb-4"><i class="fas fa-comments me-2"></i>Meus Comentários</h2>
+                <!-- Data de nascimento -->
+                <div class="form-floating mb-3">
+                    {{ form.birth_date|add_class:"form-control" }}
+                    <label for="{{ form.birth_date.id_for_label }}">
+                        <i class="fas fa-calendar-alt me-1"></i> Data de nascimento
+                    </label>
+                    {{ form.birth_date.errors }}
+                </div>
 
-        {% if comments %}
-        {% for comment in comments %}
-        <div class="border p-3 mb-3 bg-light rounded">
-            <small class="text-muted">
-                <i class="fas fa-calendar me-1"></i>{{ comment.created_at|date:"d/m/Y H:i" }}
-            </small><br>
-            <strong>Post:</strong> {{ comment.post.title }}<br>
-            <p>{{ comment.content|linebreaks }}</p>
+                <!-- Gênero -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        <i class="fas fa-venus-mars me-1"></i> Gênero
+                    </label>
+                    {{ form.gender|add_class:"form-select" }}
+                    {{ form.gender.errors }}
+                </div>
+
+                <!-- Botão -->
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">
+                    <i class="fas fa-save me-2"></i>Salvar Alterações
+                </button>
+            </form>
         </div>
-        {% endfor %}
-        {% else %}
-        <p class="text-muted">Você ainda não comentou nenhum post.</p>
-        {% endif %}
     </div>
+
+    <!-- 🔹 COMENTÁRIOS DO USUÁRIO -->
+    <!--    <div class="col-lg-6">-->
+    <!--        <div class="p-4 shadow-sm rounded bg-light h-100">-->
+    <!--            <h2 class="h5 mb-4 text-secondary">-->
+    <!--                <i class="fas fa-comments me-2"></i>Meus Comentários-->
+    <!--            </h2>-->
+
+    <!--            {% if comments %}-->
+    <!--            {% for comment in comments %}-->
+    <!--            <div class="comment-box mb-3 p-3 bg-white rounded shadow-sm">-->
+    <!--                <small class="text-muted d-block mb-1">-->
+    <!--                    <i class="fas fa-calendar me-1"></i> {{ comment.created_at|date:"d M Y, H:i" }}-->
+    <!--                </small>-->
+    <!--                <strong class="d-block text-primary">Post:</strong>-->
+    <!--                <p class="mb-1">{{ comment.post.title }}</p>-->
+    <!--                <hr class="my-2">-->
+    <!--                <p class="mb-0">{{ comment.content|linebreaks }}</p>-->
+    <!--            </div>-->
+    <!--            {% endfor %}-->
+    <!--            {% else %}-->
+    <!--            <p class="text-muted text-center">Você ainda não comentou nenhum post.</p>-->
+    <!--            {% endif %}-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="col-lg-6">
+        <div class="p-4 shadow-sm rounded bg-light h-100">
+            <h2 class="h5 mb-4 text-secondary">
+                <i class="fas fa-comments me-2"></i> Meus Comentários
+            </h2>
+
+            {% if comments %}
+            {% for comment in comments %}
+            <div class="comment-box mb-3 p-3 bg-white rounded shadow-sm">
+
+                <!-- Data alinhada -->
+                <div class="mb-2">
+                    <small class="text-muted">
+                        <i class="fas fa-calendar-alt me-1"></i>
+                        {{ comment.created_at|date:"d M Y, H:i" }}
+                    </small>
+                </div>
+
+                <!-- Post relacionado -->
+                <div class="mb-2">
+                    <span class="fw-semibold text-primary">
+                        <i class="fas fa-link me-1"></i> Post:
+                    </span>
+                    <span class="text-dark">{{ comment.post.title }}</span>
+                </div>
+
+                <!-- Linha divisória -->
+                <hr class="my-2">
+
+                <!-- Conteúdo do comentário -->
+                <div class="ps-2 border-start border-2">
+                    <p class="mb-0 text-dark">
+                        {{ comment.content|linebreaks }}
+                    </p>
+                </div>
+
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="text-muted text-center">
+                Você ainda não comentou nenhum post.
+            </p>
+            {% endif %}
+        </div>
+    </div>
+
 </div>
+
 {% endblock %}
